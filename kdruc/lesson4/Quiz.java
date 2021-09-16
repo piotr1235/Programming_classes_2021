@@ -1,7 +1,11 @@
 package kdruc.lesson4;
 
+
+import kdruc.lesson5.MultipleChoiceQuestion;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Quiz {
 
@@ -11,9 +15,26 @@ public class Quiz {
 
     List<Question> questionList = new ArrayList<>(List.of(question1, question2));
 
+    MultipleChoiceQuestion multi1 = new MultipleChoiceQuestion("Which number is greater than 5?", new ArrayList<>(List.of("1", "2", "6")), 3);
+    MultipleChoiceQuestion multi2 = new MultipleChoiceQuestion("Which number is greater than 5?", new ArrayList<>(List.of("1", "6", "2")), 2);
+
+    List<MultipleChoiceQuestion> multipleChoiceQuestionList = new ArrayList<>(List.of(multi1, multi2));
+
+    final Scanner in = new Scanner(System.in); // read only
+
+    int correctCount = 0;
+    int allQuestions = questionList.size();
+
     for (Question question : questionList) {
       question.ask();
+      String userAnswer = in.nextLine();
+      boolean isCorrect = question.check(userAnswer);
+      if (isCorrect) {
+        correctCount++;
+      }
     }
+
+    System.out.printf("You got %d correct answers out of %d", correctCount, allQuestions);
 
   }
 
