@@ -23,7 +23,7 @@ public class Quiz {
     final Scanner in = new Scanner(System.in); // read only
 
     int correctCount = 0;
-    int allQuestions = questionList.size();
+    int allQuestions = questionList.size() + multipleChoiceQuestionList.size();
 
     for (Question question : questionList) {
       question.ask();
@@ -32,6 +32,16 @@ public class Quiz {
       if (isCorrect) {
         correctCount++;
       }
+    }
+
+    for (MultipleChoiceQuestion multipleQuestion : multipleChoiceQuestionList) {
+      multipleQuestion.ask();
+      String userAnswer = in.nextLine();
+      boolean isCorrect = multipleQuestion.check(userAnswer);
+      if (isCorrect) {
+        correctCount++;
+      }
+
     }
 
     System.out.printf("You got %d correct answers out of %d", correctCount, allQuestions);

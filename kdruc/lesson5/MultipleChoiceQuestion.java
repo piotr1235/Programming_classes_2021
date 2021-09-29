@@ -19,7 +19,7 @@ public class MultipleChoiceQuestion {
     System.out.println(this.question);
     int i = 1;
     for (String choice : choices) {
-      System.out.printf("%d) %s", i, choice);
+      System.out.printf("%d) %s%n", i, choice);
       i++;
     }
   }
@@ -28,4 +28,6 @@ public class MultipleChoiceQuestion {
     int userAnswerInt = Integer.parseInt(userAnswer);
     return this.correct == userAnswerInt;
   }
+
+
 }
