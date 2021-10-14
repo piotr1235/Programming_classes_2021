@@ -1,15 +1,12 @@
 package kdruc.lesson7;
 
+import kdruc.lesson9.Person;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student {
+public class Student extends Person {
 
-  public static int idCount;
-
-  public String name;
-  public int id;
-  public int age;
   public String className;
   public double average;
   public List<Double> grades = new ArrayList<>();
@@ -22,7 +19,6 @@ public class Student {
   public void receiveGrade(double grade) {
     grades.add(grade);
     this.calculateAverage();
-    this.printInfo();
   }
 
   public void calculateAverage() {
