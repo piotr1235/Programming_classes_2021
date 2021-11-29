@@ -24,11 +24,14 @@ public class Zoo {
     Animal a2 = new Cat();
     Cat a3 = new Cat();
 
+    Animal a4 = new Dog();
+
     // if a variable is of a certain type, then it has access only to fields/methods from that class
 
     a1.makeSound();
     a2.makeSound();
     a3.makeSound();
+    a4.makeSound();
 
     printInfo(a1);
     printInfo(a2);

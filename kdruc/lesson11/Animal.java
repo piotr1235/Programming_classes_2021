@@ -13,7 +13,5 @@ public abstract class Animal {
     System.out.println("New animal!");
   }
 
-  public void makeSound() throws UnexpectedException { // signature of a method
-    throw new UnexpectedException("Cannot make sound");
-  }
+  public abstract void makeSound() throws UnexpectedException; // with abstract methods you cannot have any body
 }
