@@ -10,6 +10,5 @@ public class Fan {
     if (num == 1) controller.stop();
     if (num == 2) controller.setSlow();
     if (num == 3) controller.setFast();
-
   }
 }
