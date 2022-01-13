@@ -39,10 +39,12 @@ public interface IWorld {
   /**
    * Draws the world with alive and dead cells
    */
-  String drawWorld();
+  String drawWorld() throws OutOfBounds;
 
   /**
    * Simulates the world and updated living/dead cells
    */
-  void tick();
+  void tick() throws OutOfBounds;
+
+  void simulate(int t);
 }

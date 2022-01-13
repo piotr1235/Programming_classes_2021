@@ -1,15 +1,17 @@
 package kdruc.gameoflife;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 
 public class World implements IWorld {
   // dimensions of the world
-  private int n = 10, m = 10;
+  private int n = 5, m = 7;
 
   // living and dead cells with border around
-  private List<Boolean> cells = Collections.nCopies((n + 2) * (m + 2), false);
+  private List<Boolean> cells = new ArrayList<>(Collections.nCopies((n + 2) * (m + 2), false));
 
   public boolean editable(int x, int y) {
     return x >= 1 && x <= n && y >= 1 && y <= m;
@@ -22,6 +24,14 @@ public class World implements IWorld {
   private int getId(int x, int y) throws OutOfBounds {
     check(x, y);
     return x + y * (n + 2);
+  }
+
+  private int getX(int id) {
+    return id % (n + 2);
+  }
+
+  private int getY(int id) {
+    return id / (n + 2);
   }
 
   @Override
@@ -59,17 +69,65 @@ public class World implements IWorld {
   }
 
   @Override
-  public String drawWorld() {
-    for (int i = 1; i <= n; i++) {
-      for (int j = 1; j <= m; j++) {
+  public String drawWorld() throws OutOfBounds {
 
+    String map = "";
+    for (int j = 1; j <= m; j++) {
+      for (int i = 1; i <= n; i++) {
+        if (this.get(i, j)) {
+          map += "#";
+
+        } else {
+          map += "_";
+        }
       }
+      map += "\n";
     }
-    return null;
+    return map;
   }
 
   @Override
-  public void tick() {
+  public void tick() throws OutOfBounds {
+
+    List<Integer> lives = new LinkedList<>();
+    List<Integer> dies = new LinkedList<>();
+    for (int j = 1; j <= m; j++) {
+      for (int i = 1; i <= n; i++) {
+        if (countNeighbours(i, j) < 2) {
+          dies.add(getId(i, j));
+        } else if (countNeighbours(i, j) == 3) {
+          lives.add(getId(i, j));
+        } else if (countNeighbours(i, j) > 3) {
+          dies.add(getId(i, j));
+        }
+      }
+    }
+
+    for (int id : lives) {
+      create(getX(id), getY(id));
+    }
+
+    for (int id : dies) {
+      kill(getX(id), getY(id));
+    }
+  }
+
+  @Override
+  public void simulate(int t) {
+
+  }
+
+  public static void main(String[] args) throws OutOfBounds {
+    IWorld world = new World();
+    // still life
+    world.create(2, 2);
+    world.create(2, 3);
+    world.create(2, 4);
+
+    for (int i = 1; i <= 30; i++) {
+      System.out.println(world.drawWorld());
+      world.tick();
+    }
 
   }
 }
