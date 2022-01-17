@@ -47,4 +47,11 @@ public interface IWorld {
   void tick() throws OutOfBounds;
 
   void simulate(int t);
+
+  /**
+   * Add a world Object to the world
+   *
+   * @param worldObject - an object to be added
+   */
+  void add(WorldObject worldObject);
 }

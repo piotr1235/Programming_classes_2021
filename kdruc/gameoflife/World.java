@@ -114,20 +114,37 @@ public class World implements IWorld {
 
   @Override
   public void simulate(int t) {
+    for (int i = 1; i <= t; i++) {
+      try {
+        System.out.print("\033[H\033[2J");
+        System.out.println(drawWorld());
+        tick();
+        Thread.sleep(100);
+      } catch (Exception ignored) { // OutOfBounds is included in Exception
+      }
+    }
+  }
 
+  @Override
+  public void add(WorldObject worldObject) {
+    for (int y = 0; y < worldObject.height; y++) {
+      for (int x = 0; x < worldObject.width; x++) {
+        if (worldObject.get(x, y)) {
+          try {
+            create(worldObject.x + x, worldObject.y + y);
+          } catch (Exception ignored) {
+          }
+        }
+      }
+    }
   }
 
   public static void main(String[] args) throws OutOfBounds {
     IWorld world = new World();
-    // still life
-    world.create(2, 2);
-    world.create(2, 3);
-    world.create(2, 4);
 
-    for (int i = 1; i <= 30; i++) {
-      System.out.println(world.drawWorld());
-      world.tick();
-    }
+    Spinner s1 = new Spinner(2, 2);
+    world.add(s1);
 
+    world.simulate(20);
   }
 }
