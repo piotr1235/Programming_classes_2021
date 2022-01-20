@@ -1,5 +1,7 @@
 package kdruc.gameoflife;
 
+import kdruc.gameoflife.worldobjects.WorldObject;
+
 public interface IWorld {
 
   /**
@@ -51,7 +53,7 @@ public interface IWorld {
   /**
    * Add a world Object to the world
    *
-   * @param worldObject - an object to be added
+   * @param worldObjects - an object to be added
    */
-  void add(WorldObject worldObject);
+  void add(WorldObject... worldObjects) throws OutOfBounds;
 }

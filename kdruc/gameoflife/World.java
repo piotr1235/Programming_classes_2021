@@ -1,37 +1,55 @@
 package kdruc.gameoflife;
 
+import kdruc.gameoflife.worldobjects.Multiple;
+import kdruc.gameoflife.worldobjects.Spinner;
+import kdruc.gameoflife.worldobjects.Square;
+import kdruc.gameoflife.worldobjects.WorldObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 
-public class World implements IWorld {
+public class World extends WorldObject implements IWorld {
+
   // dimensions of the world
-  private int n = 5, m = 7;
+  //private int width, height;
 
   // living and dead cells with border around
-  private List<Boolean> cells = new ArrayList<>(Collections.nCopies((n + 2) * (m + 2), false));
+  //private List<Boolean> cells;
+
+  public World() {
+    this(10, 10);
+  }
+
+  public World(int width, int height) {
+    super(0, 0);
+    this.width = width;
+    this.height = height;
+
+    this.cells = new ArrayList<>(Collections.nCopies((this.width + 2) * (this.height + 2), false));
+  }
 
   public boolean editable(int x, int y) {
-    return x >= 1 && x <= n && y >= 1 && y <= m;
+    return x >= 1 && x <= width && y >= 1 && y <= height;
   }
 
   private void check(int x, int y) throws OutOfBounds {
-    if (x < 0 || y < 0 || x > n + 1 || y > m + 1) throw new OutOfBounds();
+    if (x < 0 || y < 0 || x > width + 1 || y > height + 1) throw new OutOfBounds();
   }
 
   private int getId(int x, int y) throws OutOfBounds {
     check(x, y);
-    return x + y * (n + 2);
+    return x + y * (width + 2);
   }
 
   private int getX(int id) {
-    return id % (n + 2);
+    return id % (width + 2);
   }
 
   private int getY(int id) {
-    return id / (n + 2);
+    return id / (width + 2);
   }
 
   @Override
@@ -72,8 +90,8 @@ public class World implements IWorld {
   public String drawWorld() throws OutOfBounds {
 
     String map = "";
-    for (int j = 1; j <= m; j++) {
-      for (int i = 1; i <= n; i++) {
+    for (int j = 1; j <= height; j++) {
+      for (int i = 1; i <= width; i++) {
         if (this.get(i, j)) {
           map += "#";
 
@@ -91,8 +109,8 @@ public class World implements IWorld {
 
     List<Integer> lives = new LinkedList<>();
     List<Integer> dies = new LinkedList<>();
-    for (int j = 1; j <= m; j++) {
-      for (int i = 1; i <= n; i++) {
+    for (int j = 1; j <= height; j++) {
+      for (int i = 1; i <= width; i++) {
         if (countNeighbours(i, j) < 2) {
           dies.add(getId(i, j));
         } else if (countNeighbours(i, j) == 3) {
@@ -125,25 +143,24 @@ public class World implements IWorld {
     }
   }
 
-  @Override
-  public void add(WorldObject worldObject) {
-    for (int y = 0; y < worldObject.height; y++) {
-      for (int x = 0; x < worldObject.width; x++) {
-        if (worldObject.get(x, y)) {
-          try {
-            create(worldObject.x + x, worldObject.y + y);
-          } catch (Exception ignored) {
-          }
-        }
-      }
-    }
-  }
 
   public static void main(String[] args) throws OutOfBounds {
     IWorld world = new World();
 
-    Spinner s1 = new Spinner(2, 2);
-    world.add(s1);
+    WorldObject s1 = new Spinner(2, 2);
+    WorldObject s2 = new Square(5, 5);
+
+    //world.add(s1, s2);
+
+    /*
+    --##
+    --##
+    ##--
+    ##--
+     */
+
+    WorldObject s3 = new Multiple(1, 1, new Square(3, 1), new Square(1, 3));
+    world.add(s3);
 
     world.simulate(20);
   }

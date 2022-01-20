@@ -1,4 +1,4 @@
-package kdruc.gameoflife;
+package kdruc.gameoflife.worldobjects;
 
 import java.util.ArrayList;
 import java.util.Collections;
