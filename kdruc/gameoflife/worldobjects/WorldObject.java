@@ -20,7 +20,6 @@ public abstract class WorldObject {
     return cells.get(x + y * width);
   }
 
-
   public boolean editable(int x, int y) {
     return x >= 1 && x <= width && y >= 1 && y <= height;
   }
@@ -43,13 +42,16 @@ public abstract class WorldObject {
   }
 
   public void add(WorldObject... worldObjects) throws OutOfBounds {
+    this.add(0, 0, worldObjects);
+  }
 
+  public void add(int xAdd, int yAdd, WorldObject... worldObjects) throws OutOfBounds {
     for (WorldObject worldObject : worldObjects) {
       for (int y = 0; y < worldObject.height; y++) {
         for (int x = 0; x < worldObject.width; x++) {
           if (worldObject.get(x, y)) {
             try {
-              cells.set(worldObject.x + x + (worldObject.y + y) * this.width, true);
+              cells.set(worldObject.x + x + xAdd + (worldObject.y + y + yAdd) * this.width, true);
             } catch (Exception ignored) {
             }
           }

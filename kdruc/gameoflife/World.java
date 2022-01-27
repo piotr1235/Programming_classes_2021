@@ -1,13 +1,8 @@
 package kdruc.gameoflife;
 
-import kdruc.gameoflife.worldobjects.Multiple;
-import kdruc.gameoflife.worldobjects.Square;
-import kdruc.gameoflife.worldobjects.WorldObject;
+import kdruc.gameoflife.worldobjects.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
 public class World extends WorldObject implements IWorld {
@@ -110,27 +105,16 @@ public class World extends WorldObject implements IWorld {
     }
   }
 
-  // override add, user super.add()
-
+  public void add(WorldObject... worldObjects) throws OutOfBounds {
+    super.add(1, 1, worldObjects);
+  }
 
   public static void main(String[] args) throws OutOfBounds {
-    IWorld world = new World(5, 5);
+    IWorld world = new World(10, 10);
 
-//    WorldObject s1 = new Spinner(2, 2);
-//    WorldObject s2 = new Square(5, 5);
+    WorldObject s1 = new RandomWorld(0, 0);
+    world.add(s1);
 
-    //world.add(s1, s2);
-
-    /*
-    --##
-    --##
-    ##--
-    ##--
-     */
-
-    WorldObject s3 = new Multiple(1, 1, new Square(2, 0), new Square(0, 2));
-    world.add(s3);
-
-    world.simulate(20);
+    world.simulate(100);
   }
 }
