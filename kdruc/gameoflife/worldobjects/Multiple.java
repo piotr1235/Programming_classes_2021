@@ -12,8 +12,8 @@ public class Multiple extends WorldObject {
     int heightMax = 0;
 
     for (WorldObject worldObject : worldObjects) {
-      widthMax = Integer.max(worldObject.x + worldObject.width - 1, widthMax);
-      heightMax = Integer.max(worldObject.y + worldObject.height - 1, heightMax);
+      widthMax = Integer.max(worldObject.x + worldObject.width, widthMax);
+      heightMax = Integer.max(worldObject.y + worldObject.height, heightMax);
     }
 
     this.width = widthMax;
