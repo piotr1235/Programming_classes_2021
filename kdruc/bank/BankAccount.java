@@ -1,12 +1,12 @@
 package kdruc.bank;
 
 public class BankAccount {
-  private int balance;
   private int accountId;
+  private int balance;
 
-  public BankAccount(int balance, int accountId) {
-    this.balance = balance;
+  public BankAccount(int accountId, int balance) {
     this.accountId = accountId;
+    this.balance = balance;
   }
 
   public int getAccountId() {
@@ -18,12 +18,24 @@ public class BankAccount {
   }
 
   public void transferTo(BankAccount accTo, int amount) {
-    this.balance -= amount;
-    accTo.balance += amount;
+
+    BankAccount first = this, second = accTo;
+
+    if (this.accountId > accTo.accountId) {
+      first = accTo;
+      second = this;
+    }
+
+    synchronized (first) {
+      synchronized (second) {
+        this.balance = this.balance - amount;
+        accTo.balance += amount;
+      }
+    }
   }
 
   @Override
   public String toString() {
-    return String.format("Balance: %6d, Account ID: %6d", balance, accountId);
+    return String.format("Account ID: %6d, Balance: %6d", accountId, balance);
   }
 }
