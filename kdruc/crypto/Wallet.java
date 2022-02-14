@@ -19,7 +19,7 @@ public class Wallet {
     privateKey = keyPair.getPrivate();
   }
 
-  public String getKey() {
-    return publicKey.toString();
+  public PublicKey getKey() {
+    return publicKey;
   }
 }
