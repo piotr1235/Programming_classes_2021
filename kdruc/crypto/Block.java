@@ -1,6 +1,5 @@
 package kdruc.crypto;
 
-
 import java.util.Calendar;
 import java.util.Random;
 
@@ -18,8 +17,8 @@ public class Block {
     this.prevHash = prevHash;
   }
 
-  public String getHash() {
-    return "";
+  @Override
+  public String toString(){
+    return String.format("transaction: %s time: %s prevHash: %s nonce: %s",transaction, rightNow.getTime(), prevHash, nonce);
   }
-
 }
