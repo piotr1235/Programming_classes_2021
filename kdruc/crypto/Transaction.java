@@ -13,6 +13,12 @@ public class Transaction {
     this.amount = amount;
   }
 
+  public Transaction(Transaction transaction){
+    this.accountFrom = transaction.accountFrom;
+    this.accountTo = transaction.accountTo;
+    this.amount = transaction.amount;
+  }
+
   @Override
   public String toString() {
     String shortAccountFrom = Utils.getShortKey(accountFrom);
