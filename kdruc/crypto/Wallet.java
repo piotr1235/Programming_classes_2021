@@ -23,7 +23,17 @@ public class Wallet {
     return publicKey;
   }
 
-  public void sendMoney(int amount, PublicKey sendTo){
-    
+  public void sendMoney(int amount, PublicKey sendTo) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+    Transaction transaction = new Transaction(this.publicKey, sendTo, amount);
+    Signature signature = Signature.getInstance("SHA256withRSA");
+    signature.initSign(privateKey);
+
+    byte[] messageBytes = transaction.toString().getBytes();
+
+    signature.update(messageBytes);
+    byte[] digitalSignature = signature.sign();
+
+    Chain chain = Chain.getInstance();
+    chain.addBlock(transaction, digitalSignature, publicKey, 0);
   }
 }
