@@ -22,4 +22,8 @@ public class Wallet {
   public PublicKey getKey() {
     return publicKey;
   }
+
+  public void sendMoney(int amount, PublicKey sendTo){
+    
+  }
 }
