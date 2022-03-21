@@ -37,7 +37,7 @@ public class Block {
     String hash = this.getHash();
     int numOf0 = 0;
 
-    int requiredLength = 4;
+    int requiredLength = 2;
 
     for (int i = 0; i < requiredLength; i++) {
       if (hash.charAt(i) == '0') {
@@ -46,5 +46,9 @@ public class Block {
     }
 
     return numOf0 == requiredLength;
+  }
+
+  public Transaction getTransaction() {
+    return new Transaction(transaction);
   }
 }

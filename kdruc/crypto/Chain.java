@@ -1,8 +1,6 @@
 package kdruc.crypto;
 
 import java.security.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
@@ -14,13 +12,16 @@ public class Chain {
   private Wallet master = new Wallet();
 
 
-  private List<Block> blockList;
+  private Stack<Block> blockList;
 
   private Chain() throws NoSuchAlgorithmException {
     Transaction transaction = new Transaction(genesis.getKey(), master.getKey(), 1000);
-    Block block = new Block(transaction, "0000000000000000000000000000000");
+    Block block = new Block(transaction, "00000000000000000000000000000000");
+    for (int i = 0; i < 1000000; i++) {
+      if (block.mine(i)) break;
+    }
     blockList = new Stack<>();
-    blockList.add(block);
+    blockList.push(block);
   }
 
   static public Chain getInstance() throws NoSuchAlgorithmException {
@@ -31,7 +32,7 @@ public class Chain {
   }
 
   private Block getLastBlock() {
-    return blockList.get(0);
+    return blockList.peek();
   }
 
   public boolean addBlock(Transaction transaction, byte[] digitalSignature, PublicKey publicKey, int nonce) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
@@ -44,9 +45,27 @@ public class Chain {
     Block block = new Block(transaction, getLastBlock().getHash());
     boolean mined = block.mine(nonce);
     if (mined) {
-      blockList.add(block);
+      blockList.push(block);
       return true;
     }
     return false;
   }
+
+  public Wallet getMasterPK() {
+
+    return master;
+  }
+
+  public String toString() {
+    StringBuilder allBlocks = new StringBuilder();
+    for (Block block : blockList) {
+      allBlocks.append(block.toString()).append("\n");
+    }
+    return allBlocks.toString();
+  }
+
+  public List<Block> getBlocks() {
+    return blockList;
+  }
+
 }

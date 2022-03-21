@@ -23,7 +23,7 @@ public class Wallet {
     return publicKey;
   }
 
-  public void sendMoney(int amount, PublicKey sendTo) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+  public boolean sendMoney(int amount, PublicKey sendTo, int nonce) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
     Transaction transaction = new Transaction(this.publicKey, sendTo, amount);
     Signature signature = Signature.getInstance("SHA256withRSA");
     signature.initSign(privateKey);
@@ -34,6 +34,28 @@ public class Wallet {
     byte[] digitalSignature = signature.sign();
 
     Chain chain = Chain.getInstance();
-    chain.addBlock(transaction, digitalSignature, publicKey, 0);
+    return chain.addBlock(transaction, digitalSignature, publicKey, nonce);
   }
+
+  public void sendMoneyMine(int amount, PublicKey sendTo) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+    for (int i = 0; i < 1000000; i++) {
+      if (sendMoney(amount, sendTo, i)) break;
+    }
+  }
+
+  public int getMyBalance() throws NoSuchAlgorithmException {
+    int myBalance = 0;
+    for (Block block :
+      Chain.getInstance().getBlocks()) {
+      Transaction transaction = block.getTransaction();
+      if (transaction.getAccountFrom() == publicKey) {
+        myBalance -= transaction.getAmount();
+      }
+      if (transaction.getAccountTo() == publicKey) {
+        myBalance += transaction.getAmount();
+      }
+    }
+    return myBalance;
+  }
+
 }

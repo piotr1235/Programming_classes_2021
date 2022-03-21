@@ -13,7 +13,7 @@ public class Transaction {
     this.amount = amount;
   }
 
-  public Transaction(Transaction transaction){
+  public Transaction(Transaction transaction) {
     this.accountFrom = transaction.accountFrom;
     this.accountTo = transaction.accountTo;
     this.amount = transaction.amount;
@@ -27,4 +27,15 @@ public class Transaction {
     return String.format("amount: %6d, from: %s, to: %s", amount, shortAccountFrom, shortAccountTo);
   }
 
+  public PublicKey getAccountFrom() {
+    return accountFrom;
+  }
+
+  public PublicKey getAccountTo() {
+    return accountTo;
+  }
+
+  public int getAmount() {
+    return amount;
+  }
 }
