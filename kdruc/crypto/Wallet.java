@@ -1,15 +1,19 @@
 package kdruc.crypto;
 
 import java.security.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Wallet {
   private PublicKey publicKey = null; // your identity
   private PrivateKey privateKey = null; // your password
+  private List<UTXO> myCoins;
 
   KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
 
   public Wallet() throws NoSuchAlgorithmException {
     generateKeys();
+
   }
 
   private void generateKeys() {
@@ -44,18 +48,23 @@ public class Wallet {
   }
 
   public int getMyBalance() throws NoSuchAlgorithmException {
-    int myBalance = 0;
-    for (Block block :
-      Chain.getInstance().getBlocks()) {
-      Transaction transaction = block.getTransaction();
-      if (transaction.getAccountFrom() == publicKey) {
-        myBalance -= transaction.getAmount();
-      }
-      if (transaction.getAccountTo() == publicKey) {
-        myBalance += transaction.getAmount();
+    int balance = 0;
+    String myPublicKeyHash;
+    for ( UTXO coin:
+         this.myCoins) {
+      for (TransactionOutput output:
+      coin.getOutputList()) {
+        if(output.getPublicKeyHash() == myPublicKeyHash){
+          balance+= output.getValue();
+        }
+
       }
     }
-    return myBalance;
+    return balance;
+  }
+  public void addCoin(UTXO utxo){
+    if(this.myCoins == null) this.myCoins = new LinkedList<>();
+    this.myCoins.add(utxo);
   }
 
 }
