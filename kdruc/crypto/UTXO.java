@@ -3,7 +3,7 @@ package kdruc.crypto;
 import java.util.LinkedList;
 import java.util.List;
 
-public class UTXO {
+public class UTXO implements ITransaction{
     private List<TransactionInput> inputList;
     private List<TransactionOutput> outputList;
 

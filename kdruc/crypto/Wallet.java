@@ -1,5 +1,6 @@
 package kdruc.crypto;
 
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,7 +29,10 @@ public class Wallet {
   }
 
   public boolean sendMoney(int amount, PublicKey sendTo, int nonce) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
-    Transaction transaction = new Transaction(this.publicKey, sendTo, amount);
+    ITransaction transaction = new UTXO();        this.publicKey, sendTo, amount);
+    TransactionInput transactionInput = new TransactionInput();
+    transaction.addInput(transactionInput);
+
     Signature signature = Signature.getInstance("SHA256withRSA");
     signature.initSign(privateKey);
 
@@ -48,8 +52,13 @@ public class Wallet {
   }
 
   public int getMyBalance() throws NoSuchAlgorithmException {
+
+    MessageDigest digest = MessageDigest.getInstance("MD5");
+    byte[] encodedhash = digest.digest(Utils.getShortKey(publicKey).getBytes(StandardCharsets.UTF_8));
+
     int balance = 0;
-    String myPublicKeyHash;
+    String myPublicKeyHash = Utils.bytesToHex(encodedhash);
+
     for ( UTXO coin:
          this.myCoins) {
       for (TransactionOutput output:

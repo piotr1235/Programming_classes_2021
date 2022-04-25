@@ -9,7 +9,7 @@ import java.util.Random;
 public class Block {
   private static final Random randomGen = new Random();
 
-  final private Transaction transaction;
+  final private ITransaction transaction;
   final private Calendar rightNow = Calendar.getInstance();
   final private String prevHash;
 
@@ -48,7 +48,7 @@ public class Block {
     return numOf0 == requiredLength;
   }
 
-  public Transaction getTransaction() {
+  public ITransaction getTransaction() {
     return new Transaction(transaction);
   }
 }

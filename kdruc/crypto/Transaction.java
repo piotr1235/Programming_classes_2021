@@ -2,7 +2,7 @@ package kdruc.crypto;
 
 import java.security.PublicKey;
 
-public class Transaction {
+public class Transaction implements ITransaction{
   final private PublicKey accountFrom;
   final private PublicKey accountTo;
   final private int amount;
@@ -25,6 +25,16 @@ public class Transaction {
     String shortAccountTo = Utils.getShortKey(accountTo);
 
     return String.format("amount: %6d, from: %s, to: %s", amount, shortAccountFrom, shortAccountTo);
+  }
+
+  @Override
+  public void addInput(TransactionInput transactionInput) {
+    return;
+  }
+
+  @Override
+  public void addOutput(TransactionOutput transactionOutput) {
+    return;
   }
 
   public PublicKey getAccountFrom() {
