@@ -2,7 +2,7 @@ package kdruc.crypto;
 
 import java.security.PublicKey;
 
-public class Transaction implements ITransaction{
+public class Transaction implements ITransaction {
   final private PublicKey accountFrom;
   final private PublicKey accountTo;
   final private int amount;

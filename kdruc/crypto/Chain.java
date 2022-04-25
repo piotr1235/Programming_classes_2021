@@ -35,7 +35,7 @@ public class Chain {
     return blockList.peek();
   }
 
-  public boolean addBlock(Transaction transaction, byte[] digitalSignature, PublicKey publicKey, int nonce) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+  public boolean addBlock(ITransaction transaction, byte[] digitalSignature, PublicKey publicKey, int nonce) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
     Signature signature = Signature.getInstance("SHA256withRSA");
     signature.initVerify(publicKey);
     byte[] messageBytes = transaction.toString().getBytes();

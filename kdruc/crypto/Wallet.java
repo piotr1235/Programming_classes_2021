@@ -14,7 +14,6 @@ public class Wallet {
 
   public Wallet() throws NoSuchAlgorithmException {
     generateKeys();
-
   }
 
   private void generateKeys() {
@@ -29,8 +28,9 @@ public class Wallet {
   }
 
   public boolean sendMoney(int amount, PublicKey sendTo, int nonce) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
-    ITransaction transaction = new UTXO();        this.publicKey, sendTo, amount);
-    TransactionInput transactionInput = new TransactionInput();
+    ITransaction transaction = new UTXO();
+    byte[] arr = {};
+    TransactionInput transactionInput = new TransactionInput("", 0, arr, sendTo);
     transaction.addInput(transactionInput);
 
     Signature signature = Signature.getInstance("SHA256withRSA");
@@ -59,20 +59,20 @@ public class Wallet {
     int balance = 0;
     String myPublicKeyHash = Utils.bytesToHex(encodedhash);
 
-    for ( UTXO coin:
-         this.myCoins) {
-      for (TransactionOutput output:
-      coin.getOutputList()) {
-        if(output.getPublicKeyHash() == myPublicKeyHash){
-          balance+= output.getValue();
+    for (UTXO coin :
+            this.myCoins) {
+      for (TransactionOutput output :
+              coin.getOutputList()) {
+        if (output.getPublicKeyHash() == myPublicKeyHash) {
+          balance += output.getValue();
         }
-
       }
     }
     return balance;
   }
-  public void addCoin(UTXO utxo){
-    if(this.myCoins == null) this.myCoins = new LinkedList<>();
+
+  public void addCoin(UTXO utxo) {
+    if (this.myCoins == null) this.myCoins = new LinkedList<>();
     this.myCoins.add(utxo);
   }
 

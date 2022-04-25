@@ -15,8 +15,8 @@ public class Block {
 
   private int nonce = Block.randomGen.nextInt();
 
-  public Block(Transaction transaction, String prevHash) {
-    this.transaction = new Transaction(transaction);
+  public Block(ITransaction transaction, String prevHash) {
+    this.transaction = transaction;
     this.prevHash = prevHash;
   }
 
@@ -28,7 +28,7 @@ public class Block {
   public String getHash() throws NoSuchAlgorithmException {
     MessageDigest digest = MessageDigest.getInstance("MD5");
     byte[] encodedhash = digest.digest(
-      this.toString().getBytes(StandardCharsets.UTF_8));
+            this.toString().getBytes(StandardCharsets.UTF_8));
     return Utils.bytesToHex(encodedhash);
   }
 
@@ -49,6 +49,6 @@ public class Block {
   }
 
   public ITransaction getTransaction() {
-    return new Transaction(transaction);
+    return transaction;
   }
 }
