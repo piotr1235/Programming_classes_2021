@@ -1,11 +1,11 @@
-package Programming_classes_2021.kdruc.snake;
+package kdruc.snake;
 
-import Programming_classes_2021.kdruc.gameoflife.OutOfBounds;
+import kdruc.gameoflife.OutOfBounds;
 
 import javax.swing.*;
 
 public class GameFrame extends JFrame{
-    GameFrame() throws OutOfBounds {
+    GameFrame() throws OutOfBounds, InterruptedException {
         GamePanel gamePanel = new GamePanel();
 
         this.add(gamePanel);

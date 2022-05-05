@@ -1,4 +1,4 @@
-package Programming_classes_2021.kdruc.snake;
+package kdruc.snake;
 
 
 
@@ -15,7 +15,7 @@ public class GamePanel extends JPanel implements ActionListener {
     static int SCREEN_HEIGHT=600;
     static final int UNIT_SIZE = 25;
     static final int GAME_UNITS = (SCREEN_WIDTH*SCREEN_HEIGHT)/UNIT_SIZE;
-    static final int DELAY = 100;
+    static final int DELAY = 150;
     final int x[]= new int[GAME_UNITS];
     final int y[] = new int[GAME_UNITS];
     int bodyParts= 6;
@@ -25,6 +25,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     int appleExtraX;
     int appleExtraY;
+    boolean appleExtraEaten = false;
     char direction ='R';
     boolean running = false;
     Timer timer =new Timer(DELAY, this);
@@ -36,7 +37,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
 
 
-    GamePanel(){
+    GamePanel() throws InterruptedException {
 
         random = new Random();
         Dimension dimension = new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT);
@@ -52,17 +53,19 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
 
-    public void startGame(){
+    public void startGame() throws InterruptedException {
 
         for (int i = 0; i < x.length; i++) {
             x[i] = 0;
             y[i]=0;
         }
         direction ='R';
-        bodyParts = 6;
+        bodyParts = 100;
         appleEaten = 0;
-
+        appleExtraY =5*UNIT_SIZE;
+        appleExtraX =5*UNIT_SIZE;
         newApple();
+        newAppleExtra();
         running = true;
         timer.start();
     }
@@ -79,9 +82,11 @@ public class GamePanel extends JPanel implements ActionListener {
                 graphics.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_WIDTH);
                 graphics.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
             }
-            newAppleExtra();
-            if(appleExtraY == -1 && appleExtraX == -1){
-                graphics.setColor(new Color(random.nextInt(255),random.nextInt(255),random.nextInt(255),random.nextInt(255)));
+            //newAppleExtra();
+            //if(appleExtraY == -1 && appleExtraX == -1){
+
+            if(!appleExtraEaten){
+                graphics.setColor(Color.BLUE);
                 graphics.fillOval(appleExtraX, appleExtraY, UNIT_SIZE, UNIT_SIZE);
             }
             graphics.setColor(Color.RED);
@@ -93,8 +98,9 @@ public class GamePanel extends JPanel implements ActionListener {
                     graphics.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
 
                 } else {
-                    graphics.setColor(new Color(45, 180, 0));
 
+                    graphics.setColor(new Color(45, 180, 0));
+                    graphics.setColor(new Color(random.nextInt(255),random.nextInt(255),random.nextInt(255)));
                     graphics.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
                 }
                 //System.out.println("snake body : X"+x[i]+" Y"+ y[i]);
@@ -130,7 +136,9 @@ public class GamePanel extends JPanel implements ActionListener {
         }
 
     }
-    public void newAppleExtra(){
+    public void newAppleExtra() throws InterruptedException {
+       /* Thread.sleep(1000);
+        System.out.println("works");
         int appleXRan = random.nextInt(SCREEN_WIDTH/UNIT_SIZE)*UNIT_SIZE;
         int appleYRan = random.nextInt(SCREEN_HEIGHT/UNIT_SIZE)*UNIT_SIZE;
         int ifYes = 0;
@@ -140,17 +148,22 @@ public class GamePanel extends JPanel implements ActionListener {
                 ifYes++;
             }
         }
-        if(random.nextInt(100)<50) {
-            if (ifYes > 0) {
-                newApple();
-            } else {
+        if(ifYes > 0) {
+            if (random.nextInt(10)<5) {
+                System.out.println("yes");
                 appleExtraX = appleXRan;
                 appleExtraY = appleYRan;
+                appleExtraEaten = false;
+            } else {
+
+                newAppleExtra();
+                System.out.println("no");
             }
         }else{
-            appleExtraX = -1;
-            appleExtraY = -1;
-        }
+            //appleExtraEaten = true;
+            newAppleExtra();
+            System.out.println("no no");
+        }*/
     }
 
 
@@ -173,6 +186,14 @@ public class GamePanel extends JPanel implements ActionListener {
             bodyParts++;
             appleEaten++;
             newApple();
+        }
+    }
+    public void checkAppleExtra() throws InterruptedException {
+        if(x[0] == appleExtraX && y[0] == appleExtraY){
+            bodyParts = bodyParts +5;
+            appleEaten = appleEaten + 5;
+            appleExtraEaten=true;
+            newAppleExtra();
         }
     }
 
@@ -226,7 +247,13 @@ public class GamePanel extends JPanel implements ActionListener {
                 throw new RuntimeException(ex);
             }
             checkApple();
+            try {
+                checkAppleExtra();
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
             checkCollision();
+
         }
         repaint();
     }
@@ -262,7 +289,11 @@ public class GamePanel extends JPanel implements ActionListener {
                     }
                     break;
                 case KeyEvent.VK_SPACE:
-                    startGame();
+                    try {
+                        startGame();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                     repaint();
                     break;
             }
