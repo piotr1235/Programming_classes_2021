@@ -1,2 +1,6 @@
-package kdruc.chess.pieceattributes;public class PieceColor {
+package kdruc.chess.pieceattributes;
+
+public enum PieceColor {
+		WHITE,
+		BLACK
 }

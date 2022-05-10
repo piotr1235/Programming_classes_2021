@@ -1,2 +1,37 @@
-package kdruc.chess.pieces;public class Piece {
+package kdruc.chess.pieces;
+
+import kdruc.chess.pieceattributes.*;
+
+
+
+public abstract class Piece {
+		protected final PieceColor pieceColor;
+		private final char name;
+		private Position position;
+
+
+		public Piece(char name, PieceColor pieceColor, Position position) {
+				this.pieceColor = pieceColor;
+				this.name = name;
+				this.position = position;
+		}
+
+		public PieceColor color() {
+				return pieceColor;
+		}
+
+		public char name() {
+				return name;
+		}
+
+		public Position position() {
+				return position;
+		}
+
+		public void moveTo(Position position) {
+				this.position = position;
+		}
+
+		public abstract char icon();
+
 }

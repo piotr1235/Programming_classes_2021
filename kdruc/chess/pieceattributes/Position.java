@@ -1,2 +1,5 @@
-package kdruc.chess.pieceattributes;public class Position {
+package kdruc.chess.pieceattributes;
+
+public class Position {
+
 }
