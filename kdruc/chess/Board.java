@@ -10,6 +10,7 @@ import static kdruc.chess.pieceattributes.Position.getPosition;
 
 public class Board {
 
+	private static final Board board = new Board();
 	public static final int SIZE = 8;
 	private Map<Position, Piece> pieceMap;
 
@@ -25,10 +26,20 @@ public class Board {
 		pieceMap.put(position1, new Queen(PieceColor.WHITE, position1));
 	}
 
+	public static Board getBoard() {
+		return board;
+	}
+
 	public boolean isOccupied(Position position) {
 		return pieceMap.get(position) != null;
 	}
 
+		public Piece getPiece(Position position) {
+				return pieceMap.get(position);
+		}
+		public void addPiece(Piece piece){
+				pieceMap.put(piece.position(),piece);
+		}
 	@Override
 	public String toString() {
 		String s = "";
