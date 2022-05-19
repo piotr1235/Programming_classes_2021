@@ -20,10 +20,19 @@ public class Board {
 	}
 
 	private void setUpBoard() {
-		Position position = getPosition(0, 0);
-		pieceMap.put(position, new Rook(PieceColor.BLACK, position));
-		Position position1 = getPosition(2, 0);
-		pieceMap.put(position1, new Queen(PieceColor.WHITE, position1));
+		setUpPawns();
+	}
+
+	private void setUpPawns() {
+		for (int i = 0; i < SIZE; i++) {
+			Position whitePosition = getPosition(i, 1);
+			Piece whitePawn = new Pawn(PieceColor.WHITE, whitePosition);
+			addPiece(whitePawn);
+
+			Position blackPosition = getPosition(i, 6);
+			Piece blackPawn = new Pawn(PieceColor.BLACK, blackPosition);
+			addPiece(blackPawn);
+		}
 	}
 
 	public static Board getBoard() {
@@ -34,12 +43,14 @@ public class Board {
 		return pieceMap.get(position) != null;
 	}
 
-		public Piece getPiece(Position position) {
-				return pieceMap.get(position);
-		}
-		public void addPiece(Piece piece){
-				pieceMap.put(piece.position(),piece);
-		}
+	public Piece getPiece(Position position) {
+		return pieceMap.get(position);
+	}
+
+	public void addPiece(Piece piece) {
+		pieceMap.put(piece.position(), piece);
+	}
+
 	@Override
 	public String toString() {
 		String s = "";
