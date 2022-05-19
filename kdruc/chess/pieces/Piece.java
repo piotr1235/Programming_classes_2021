@@ -33,15 +33,14 @@ public abstract class Piece {
 	public void moveTo(Position position) {
 		this.position = position;
 	}
-	public boolean canCapture(Piece piece, Position target) {
-		Board board = Board.getBoard();
+	public boolean canCapture( Position target, Board board) {
 		if(board.isOccupied(target)){
-			return board.getPiece(target).color() != piece.color();
+			return board.getPiece(target).color() != this.color();
 		}
 		return false;
 	}
 
 	public abstract char icon();
-		public abstract List<Position> getAllPositions();
+		public abstract List<Position> getAllPositions(Board board);
 
 }

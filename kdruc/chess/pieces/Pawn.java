@@ -22,28 +22,30 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public List<Position> getAllPositions() {
+	public List<Position> getAllPositions(Board board) {
 		List<Position> positions = new ArrayList<>();
 		int column = this.position().column();
 		int row = this.position().row();
 		int direction = this.color() == PieceColor.WHITE ? 1 : -1;
 
-		Board board = Board.getBoard();
+
 		Position newPosition1 = getPosition(column, row + direction);
 		if (!board.isOccupied(newPosition1)) {
 			positions.add(newPosition1);
 		}
 
-		Position newPosition2 = getPosition(column, row+ (direction * 2));
+		Position newPosition2 = getPosition(column, row + (direction * 2));
 		if (firstMove && !board.isOccupied(newPosition2)) {
 			positions.add(newPosition2);
 		}
-		Position target = getPosition(column,row);
-		if(this.canCapture()){
-
+		Position targetR = getPosition(column + 1, row + direction); // right kill
+		Position targetL = getPosition(column - 1, row + direction); // Left kill
+		if (this.canCapture(targetR, board)) {
+			positions.add(targetR);
 		}
-
-
+		if (this.canCapture(targetL, board)) {
+			positions.add(targetL);
+		}
 
 
 		return positions;

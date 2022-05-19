@@ -1,7 +1,10 @@
 package kdruc.chess.pieces;
 
+import kdruc.chess.Board;
 import kdruc.chess.pieceattributes.PieceColor;
 import kdruc.chess.pieceattributes.Position;
+
+import java.util.List;
 
 public class Knight extends Piece {
 
@@ -14,4 +17,10 @@ public class Knight extends Piece {
 		if (this.pieceColor == PieceColor.WHITE) return '♘';
 		return '♞';
 	}
+
+	@Override
+	public List<Position> getAllPositions(Board board) {
+		return null;
+	}
+
 }

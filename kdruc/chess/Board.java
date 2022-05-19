@@ -3,14 +3,16 @@ package kdruc.chess;
 import kdruc.chess.pieceattributes.*;
 import kdruc.chess.pieces.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static kdruc.chess.pieceattributes.Position.getPosition;
 
 public class Board {
 
-	private static final Board board = new Board();
 	public static final int SIZE = 8;
 	private Map<Position, Piece> pieceMap;
 
@@ -35,9 +37,6 @@ public class Board {
 		}
 	}
 
-	public static Board getBoard() {
-		return board;
-	}
 
 	public boolean isOccupied(Position position) {
 		return pieceMap.get(position) != null;
@@ -61,8 +60,7 @@ public class Board {
 		return s;
 	}
 
-	public static void main(String[] args) {
-		Board board = new Board();
-		System.out.println(board);
+	public void main(String[] args) {
+
 	}
 }

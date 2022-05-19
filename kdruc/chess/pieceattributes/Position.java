@@ -5,7 +5,7 @@ import kdruc.chess.Board;
 public class Position {
 	private final int column;
 	private final int row;
-	private static Position[][] allPositions = new Position[8][8];
+	private static Position[][] allPositions = new Position[Board.SIZE][Board.SIZE];
 
 	static {
 		for (int i = 0; i < Board.SIZE; i++) {
@@ -17,11 +17,13 @@ public class Position {
 
 
 	private Position(int column, int row) {
-		this.column = column;
-		this.row = row;
+			this.column = column;
+			this.row = row;
 	}
 
 	public static Position getPosition(int column, int row) {
+		if (column < 0 || column >= Board.SIZE) return null;
+		if (row < 0 || row >= Board.SIZE) return null;
 		return allPositions[column][row];
 	}
 
