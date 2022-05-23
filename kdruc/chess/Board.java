@@ -1,10 +1,13 @@
 package kdruc.chess;
 
-import kdruc.chess.pieceattributes.*;
-import kdruc.chess.pieces.*;
+import kdruc.chess.pieceattributes.PieceColor;
+import kdruc.chess.pieceattributes.Position;
+import kdruc.chess.pieces.Pawn;
+import kdruc.chess.pieces.Piece;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static kdruc.chess.pieceattributes.Position.getPosition;
 
@@ -34,7 +37,6 @@ public class Board {
 		}
 	}
 
-
 	public boolean isOccupied(Position position) {
 		return pieceMap.get(position) != null;
 	}
@@ -59,7 +61,6 @@ public class Board {
 			piece.moveTo(finalPosition);
 			addPiece(piece);
 		}
-
 	}
 
 	private static final String emptyBoard =
@@ -82,34 +83,24 @@ public class Board {
 									+ " ╚═╧═╧═╧═╧═╧═╧═╧═╝\n"
 									+ "  a b c d e f g h";
 
-
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder(emptyBoard);
 		for (int row = 0; row < SIZE; row++) {
 			for (int column = 0; column < SIZE; column++) {
-
 				Piece piece = getPiece(getPosition(column, row));
 				int a8 = 21;
 				int boardWith = 38;
 				int id = (SIZE - 1 - row) * boardWith + column * 2 + a8;
 
 				if (piece != null) s.setCharAt(id, piece.icon());
-
-
 			}
 		}
-
-
 		return s.toString();
 	}
 
 	public static void main(String[] args) {
-
 		Board board = new Board();
-
 		System.out.println(board);
-
-
 	}
 }

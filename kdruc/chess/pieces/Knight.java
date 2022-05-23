@@ -22,5 +22,4 @@ public class Knight extends Piece {
 	public List<Position> getAllPositions(Board board) {
 		return null;
 	}
-
 }

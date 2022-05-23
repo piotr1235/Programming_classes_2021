@@ -21,5 +21,4 @@ public class King extends Piece {
 	public List<Position> getAllPositions(Board board) {
 		return null;
 	}
-
 }

@@ -22,5 +22,4 @@ public class Queen extends Piece {
 	public List<Position> getAllPositions(Board board) {
 		return null;
 	}
-
 }

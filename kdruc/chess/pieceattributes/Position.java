@@ -15,10 +15,9 @@ public class Position {
 		}
 	}
 
-
 	private Position(int column, int row) {
-			this.column = column;
-			this.row = row;
+		this.column = column;
+		this.row = row;
 	}
 
 	public static Position getPosition(int column, int row) {

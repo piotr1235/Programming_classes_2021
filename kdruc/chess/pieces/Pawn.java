@@ -1,7 +1,8 @@
 package kdruc.chess.pieces;
 
 import kdruc.chess.Board;
-import kdruc.chess.pieceattributes.*;
+import kdruc.chess.pieceattributes.PieceColor;
+import kdruc.chess.pieceattributes.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,6 @@ public class Pawn extends Piece {
 		if (this.canCapture(targetL, board)) {
 			positions.add(targetL);
 		}
-
 
 		return positions;
 	}
