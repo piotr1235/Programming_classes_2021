@@ -40,6 +40,9 @@ public abstract class Piece {
 		return false;
 	}
 
+
+
+
 	public abstract char icon();
 		public abstract List<Position> getAllPositions(Board board);
 
