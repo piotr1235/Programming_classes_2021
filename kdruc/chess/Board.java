@@ -1,9 +1,7 @@
 package kdruc.chess;
 
-import kdruc.chess.pieceattributes.PieceColor;
-import kdruc.chess.pieceattributes.Position;
-import kdruc.chess.pieces.Pawn;
-import kdruc.chess.pieces.Piece;
+import kdruc.chess.pieceattributes.*;
+import kdruc.chess.pieces.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,16 +14,21 @@ public class Board {
 	public static final int SIZE = 8;
 	private Map<Position, Piece> pieceMap;
 
-	public Board() {
+	public Board() throws IllegalMoveException {
 		this.pieceMap = new HashMap<>();
 		setUpBoard();
 	}
 
-	private void setUpBoard() {
+	private void setUpBoard() throws IllegalMoveException {
 		setUpPawns();
+		setUpRooks();
+		setUpKnights();
+		setUpBishops();
+		setUpQueens();
+		setUpKings();
 	}
 
-	private void setUpPawns() {
+	private void setUpPawns() throws IllegalMoveException {
 		for (int i = 0; i < SIZE; i++) {
 			Position whitePosition = getPosition(i, 1);
 			Piece whitePawn = new Pawn(PieceColor.WHITE, whitePosition);
@@ -37,6 +40,53 @@ public class Board {
 		}
 	}
 
+	private void setUpRooks() throws IllegalMoveException {
+		Piece whiteRookLeft = new Rook(PieceColor.WHITE, getPosition(0, 0));
+		Piece whiteRookRight = new Rook(PieceColor.WHITE, getPosition(7, 0));
+		Piece blackRookLeft = new Rook(PieceColor.BLACK, getPosition(0, 7));
+		Piece blackRookRight = new Rook(PieceColor.BLACK, getPosition(7, 7));
+		addPiece(whiteRookLeft);
+		addPiece(whiteRookRight);
+		addPiece(blackRookLeft);
+		addPiece(blackRookRight);
+	}
+
+	private void setUpKnights() throws IllegalMoveException {
+		Piece whiteKnightLeft = new Knight(PieceColor.WHITE, getPosition(1, 0));
+		Piece whiteKnightRight = new Knight(PieceColor.WHITE, getPosition(6, 0));
+		Piece blackKnightLeft = new Knight(PieceColor.BLACK, getPosition(1, 7));
+		Piece blackKnightRight = new Knight(PieceColor.BLACK, getPosition(6, 7));
+		addPiece(whiteKnightLeft);
+		addPiece(whiteKnightRight);
+		addPiece(blackKnightLeft);
+		addPiece(blackKnightRight);
+	}
+
+	private void setUpBishops() throws IllegalMoveException {
+		Piece whiteBishopLeft = new Bishop(PieceColor.WHITE, getPosition(2, 0));
+		Piece whiteBishopRight = new Bishop(PieceColor.WHITE, getPosition(5, 0));
+		Piece blackBishopLeft = new Bishop(PieceColor.BLACK, getPosition(2, 7));
+		Piece blackBishopRight = new Bishop(PieceColor.BLACK, getPosition(5, 7));
+		addPiece(whiteBishopLeft);
+		addPiece(whiteBishopRight);
+		addPiece(blackBishopLeft);
+		addPiece(blackBishopRight);
+	}
+
+	private void setUpQueens() throws IllegalMoveException {
+		Piece whiteQueen = new Queen(PieceColor.WHITE, getPosition(3, 0));
+		Piece blackQueen = new Queen(PieceColor.BLACK, getPosition(3, 7));
+		addPiece(whiteQueen);
+		addPiece(blackQueen);
+	}
+
+	private void setUpKings() throws IllegalMoveException {
+		Piece whiteKing = new King(PieceColor.WHITE, getPosition(4, 0));
+		Piece blackKing = new King(PieceColor.BLACK, getPosition(4, 7));
+		addPiece(whiteKing);
+		addPiece(blackKing);
+	}
+
 	public boolean isOccupied(Position position) {
 		return pieceMap.get(position) != null;
 	}
@@ -45,7 +95,8 @@ public class Board {
 		return pieceMap.get(position);
 	}
 
-	public void addPiece(Piece piece) {
+	public void addPiece(Piece piece) throws IllegalMoveException {
+		if (isOccupied(piece.position())) throw new IllegalMoveException();
 		pieceMap.put(piece.position(), piece);
 	}
 
@@ -53,7 +104,7 @@ public class Board {
 		pieceMap.remove(piece.position());
 	}
 
-	public void makeMove(Piece piece, Position finalPosition) {
+	public void makeMove(Piece piece, Position finalPosition) throws IllegalMoveException {
 		List<Position> positions = piece.getAllPositions(this);
 		boolean isPossible = positions.contains(finalPosition);
 		if (isPossible) {
@@ -99,7 +150,7 @@ public class Board {
 		return s.toString();
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IllegalMoveException {
 		Board board = new Board();
 		System.out.println(board);
 	}
