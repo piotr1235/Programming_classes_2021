@@ -14,9 +14,19 @@ public class Board {
 	public static final int SIZE = 8;
 	private Map<Position, Piece> pieceMap;
 
-	public Board() throws IllegalMoveException {
+	private Board() {
 		this.pieceMap = new HashMap<>();
-		setUpBoard();
+	}
+
+	public static Board getEmptyBoard() {
+		Board board = new Board();
+		return board;
+	}
+
+	public static Board getFullBoard() throws IllegalMoveException {
+		Board board = Board.getEmptyBoard();
+		board.setUpBoard();
+		return board;
 	}
 
 	private void setUpBoard() throws IllegalMoveException {
@@ -151,7 +161,7 @@ public class Board {
 	}
 
 	public static void main(String[] args) throws IllegalMoveException {
-		Board board = new Board();
+		Board board = Board.getFullBoard();
 		System.out.println(board);
 	}
 }
