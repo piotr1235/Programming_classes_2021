@@ -6,7 +6,7 @@ import kdruc.chess.pieces.Piece;
 public class Player {
 
 	private final PieceColor playerColor;
-	private Board board;
+	private final Board board;
 
 	public Player(PieceColor playerColor, Board board) {
 		this.playerColor = playerColor;

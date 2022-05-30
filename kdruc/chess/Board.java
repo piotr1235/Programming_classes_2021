@@ -12,7 +12,7 @@ import static kdruc.chess.pieceattributes.Position.getPosition;
 public class Board {
 
 	public static final int SIZE = 8;
-	private Map<Position, Piece> pieceMap;
+	private final Map<Position, Piece> pieceMap;
 
 	private Board() {
 		this.pieceMap = new HashMap<>();
