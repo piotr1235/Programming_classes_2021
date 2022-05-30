@@ -15,5 +15,6 @@ public class Player {
 
 	public void makeMove(Piece piece, Position finalPosition) throws IllegalMoveException {
 		if (piece.color() == playerColor) board.makeMove(piece, finalPosition);
+		else throw new IllegalMoveException();
 	}
 }

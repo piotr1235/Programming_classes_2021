@@ -119,7 +119,13 @@ public class Board {
 		if (isPossible) {
 			removePiece(piece);
 			piece.moveTo(finalPosition);
+			if (isOccupied(finalPosition)) {
+				Piece pieceToCapture = getPiece(finalPosition);
+				removePiece(pieceToCapture);
+			}
 			addPiece(piece);
+		} else {
+			throw new IllegalMoveException();
 		}
 	}
 
