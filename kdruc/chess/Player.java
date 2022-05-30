@@ -10,6 +10,7 @@ public class Player {
 
 	public Player(PieceColor playerColor, Board board) {
 		this.playerColor = playerColor;
+		this.board = board;
 	}
 
 	public void makeMove(Piece piece, Position finalPosition) throws IllegalMoveException {

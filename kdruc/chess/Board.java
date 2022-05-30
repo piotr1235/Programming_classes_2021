@@ -19,8 +19,7 @@ public class Board {
 	}
 
 	public static Board getEmptyBoard() {
-		Board board = new Board();
-		return board;
+		return new Board();
 	}
 
 	public static Board getFullBoard() throws IllegalMoveException {
